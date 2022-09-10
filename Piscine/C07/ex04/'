@@ -1,0 +1,107 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_convert_base.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kyko <kyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/08 17:52:46 by kyko              #+#    #+#             */
+/*   Updated: 2022/09/08 23:11:42 by kyko             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+
+void	change_base_to(char *ret, long long nbr, int base, char *str)
+{
+	if (!nbr)
+		return ;
+	if (nbr < 0)
+	{	
+		*ret = '-';
+		ret++;
+		nbr *= -1;
+	}
+	change_base_to(ret + 1, (nbr / (long long)base), base, str);
+	*ret = str[nbr % (long long)base];
+}
+
+int	check_base_to(char *base)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (base[0] == '\0' || base[1] == '\0')
+		return (0);
+	while (base[i])
+	{
+		if (base[i] == '-' || base[i] == '+')
+			return (0);
+		j = i + 1;
+		while (base[j])
+		{
+			if (base[i] == base[j])
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	printnbr_base(char *ret, long long nbr, char *base)
+{
+	int			len;
+	int			flag;
+
+	len = 0;
+	flag = 0;
+	while (base[len])
+		len++;
+	if (nbr < len && nbr >= 0)
+	{
+		ret[0] = base[nbr % len];
+		ret[1] = 0;
+	}
+	else
+		change_base_to(ret, nbr, len, base);
+}
+
+void	swap(char *s1, char *s2)
+{
+	char	temp;
+
+	temp = *s1;
+	*s1 = *s2;
+	*s2 = temp;
+}
+
+char	*ft_putnbr_base(long long nbr, char *base)
+{
+	char	*ret;
+	int		len;
+	int		index;
+	int		flag;
+
+	len = 0;
+	index = 0;
+	flag = 0;
+	if (check_base_to(base))
+	{
+		ret = (char *)malloc(65);
+		if (nbr < 0)
+			flag = 1;
+		printnbr_base(ret, nbr, base);
+		while (ret[len])
+			len++;
+		index += flag;
+		while (index < len / 2 + flag)
+		{
+			swap(&ret[index], &ret[len - 1 - index + flag]);
+			index++;
+		}
+		return (ret);
+	}
+	return (0);
+}
