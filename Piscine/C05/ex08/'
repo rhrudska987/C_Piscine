@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ten_queens_puzzle.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kyko <kyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/05 12:49:38 by kyko              #+#    #+#             */
+/*   Updated: 2022/09/05 15:25:32 by kyko             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+void	ten_queens(int i, int *count, int pos[], int flag_a[], int flag_b[], int flag_c[])
+{
+	int	j;
+
+	j = 0;
+	while (j < 10)
+	{
+		if (flag_a[i] == 0 && flag_b[i + j] == 0 && flag_c[i - j + 9] == 0)
+		{
+			pos[i] = j;
+			if (i == 10)
+			{
+				*count = *count + 1;
+				return ;
+			}
+			else
+			{
+				flag_a[j] = flag_b[i + j] = flag_c[i - j + 9] = 1;
+				ten_queens(i + 1, count, pos, flag_a, flag_b, flag_c);
+				flag_a[j] = flag_b[i + j] = flag_c[i - j + 9] = 0;
+			}
+		}
+		j++;
+	}
+}
+
+int ft_ten_queens_puzzle(void)
+{
+	int count = 0;
+	int	pos[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int flag_a[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int	flag_b[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int	flag_c[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	ten_queens(0, &count, pos, flag_a, flag_b, flag_c);
+	return (count);
+}
+#include<stdio.h>
+int main(void)
+{
+	int a = ft_ten_queens_puzzle();
+	printf("====%d====", a);
+	return 0;
+}

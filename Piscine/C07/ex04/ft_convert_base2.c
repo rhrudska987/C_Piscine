@@ -6,7 +6,7 @@
 /*   By: kyko <kyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 17:34:23 by kyko              #+#    #+#             */
-/*   Updated: 2022/09/10 22:59:00 by kyko             ###   ########.fr       */
+/*   Updated: 2022/09/12 18:49:42 by kyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,11 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	}
 	ret = change_base_from(nbr, base_from, &start) * sign;
 	return (ft_putnbr_base(ret, base_to));
+}
+#include<stdio.h>
+
+int main(void)
+{
+	char *ret = ft_convert_base("" ,"0123456789", "0123456");
+	printf("%s\n", ret);
 }
